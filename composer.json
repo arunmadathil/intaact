@@ -1,0 +1,16 @@
+{
+    "name": "arun/intaact",
+    "description": "Coding test , develop application the all neccessary concept",
+    "authors": [
+        {
+            "name": "Arun M",
+            "email": "arunmadathil005@yahoo.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\":"app/"
+        }
+    },
+    "require": {}
+}
