@@ -8,12 +8,15 @@ use App\Core\AppServiceProvider;
 use App\Core\RouteServiceProvider;
 
  $router = new RouteServiceProvider(dirname(__DIR__));
+ 
  $router->httpRoutes->get('/','home');
  
 
  $router->httpRoutes->get('/contact',[new StudentController,'index']);
 
-//  $router->httpRoutes->get('/contact','contact');
+ $router->httpRoutes->post('/contact',[new StudentController,'create']);
+
+ $router->httpRoutes->get('/contact/show',[new StudentController,'show']);
 
 
  $router->run();
