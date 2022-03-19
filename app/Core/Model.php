@@ -85,7 +85,7 @@ abstract class Model
         }
     }
 
-    public function update()
+    public function update($value)
     {
         $table = $this->tableName();
         $tbColumns = $this->tableColumns();
@@ -96,10 +96,11 @@ abstract class Model
             $update .= "`$col` = :$col, ";
         }
 
-        $sql = "update $table set ".rtrim($update, ", ")." where id = :id";
+        $sql = "update $table set ".rtrim($update, ", ")." where $this->primaryKey=:$this->primaryKey";
 
         try {
             $statement = $this->prepareQuery($sql);
+            $statement->bindParam(":$this->primaryKey", $value);
             foreach ($tbColumns as $column) {
                 $statement->bindParam(":$column", $this->{$column});
             }
@@ -112,16 +113,16 @@ abstract class Model
         }
     }
 
-    public function find($column, $value)
+    public function find($value)
     {
 
         $table = $this->tableName();
 
         try {
 
-            $statement = $this->prepareQuery("select * from $table where $column=:$column");
+            $statement = $this->prepareQuery("select * from $table where $this->primaryKey=:$this->primaryKey");
 
-            $statement->bindParam(":$column", $value);
+            $statement->bindParam(":$this->primaryKey", $value);
 
             $statement->execute();
 
@@ -131,7 +132,8 @@ abstract class Model
             } else {
                 return $statement->fetchAll();
             }
-        } catch (\PDOException $e) {
+        } 
+        catch (\PDOException $e) {
             echo 'Something went wrong' . $e->getMessage();
         }
     }

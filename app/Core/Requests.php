@@ -13,6 +13,7 @@ class Requests
     protected $requestBody = [];
 
     public $errors = [];
+    public $routeParams = [];
 
     public function __construct()
     {
@@ -21,6 +22,7 @@ class Requests
         $this->getVariables();
     }
 
+    //Resolve and get Query string data from http request
     private function parseUrl($queryString = '')
     {
         $parse = parse_url($queryString);
@@ -34,7 +36,7 @@ class Requests
     }
 
 
-    //
+    //get path from URI
     public function getPath()
     {
         $path = $this->server['REQUEST_URI'] ?? '/';
@@ -49,19 +51,23 @@ class Requests
         return $path;
     }
 
-    //
+    public function getUrl()
+    {
+        $path = $this->server['REQUEST_URI'];
+        $position = strpos($path, '?');
+        if ($position !== false) {
+            $path = substr($path, 0, $position);
+        }
+        return $path;
+    }
+
+    //Get the HTTP method
     public function getMethod()
     {
         return strtolower($this->server['REQUEST_METHOD']);
     }
 
-    //
-    public function getURI()
-    {
-        $this->server['REQUEST_URI'];
-    }
-
-
+    //Get body of request data from HTTP header for GET method
     public function bodyGet()
     {
 
@@ -71,7 +77,7 @@ class Requests
 
             foreach ($_GET as $key => $value) {
 
-                $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS); //Sanitize special charectors
+                $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS); //Sanitize special characters
 
             }
         }
@@ -79,7 +85,25 @@ class Requests
         $this->requestBody = $body;
     }
 
+    //Set route with specific value
+    public function setRouteParams($params){
+        $this->routeParams = $params;
+    }
 
+    public function getRouteParams(){
+        return $this->routeParams;
+    }
+
+    //Get last route value
+    public function routeValue(){
+
+        list($value) = end($this->routeParams);
+
+        return $value;
+
+    }
+
+    //Get body of request data from HTTP header for POST method
     public function bodyPost()
     {
 
@@ -89,12 +113,14 @@ class Requests
 
             foreach ($_POST as $key => $value) {
 
-                $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS); //Sanitize special charectors
+                $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS); //Sanitize special characters
 
             }
         }
         $this->requestBody = $body;
     }
+
+
 
     protected function getVariables()
     {
@@ -114,11 +140,11 @@ class Requests
     public function validate($args = [])
     {
 
-        foreach ($args as $key => $option) {
+        foreach ($args as $key => $option) { //Iterate for single option
 
             $options = explode('|', $option);
 
-            foreach ($options  as $method) {
+            foreach ($options  as $method) { //Iterate for option with single or multiple values
 
                 if (method_exists($this, (string)trim($method))) {
 
@@ -129,11 +155,13 @@ class Requests
 
                     if (!empty($all_params)) {
 
-                        $method =  (string)trim($all_params[0]);
+                        $method =  (string)trim($all_params[0]);//Remove extra spaces
 
                         if (method_exists($this, $method)) {
-
-                            call_user_func([$this, (string)trim($method)], ['property' => $key, 'options' => $all_params]);
+                            
+                            //Dynamic method call for each available validation options with parameters
+                            call_user_func([$this, (string)trim($method)], ['property' => $key, 'options' => $all_params]); 
+                        
                         } else {
 
                             throw new Exception('Invaild option in validation!');
@@ -145,7 +173,8 @@ class Requests
 
         return $this->errors;
     }
-
+    
+    /** Available validation methods */
     protected function email($param)
     {
 
@@ -183,7 +212,7 @@ class Requests
 
         if (filter_var($this->{$param}, FILTER_VALIDATE_INT)) {
 
-            $this->errors[$param][] = "The $param value must be a integer!";
+            $this->errors[$param][] = "The field must be numeric a value!";
         }
         return true;
     }
@@ -224,11 +253,10 @@ class Requests
     {
         $propertyName = $params['property'];
         $options = $params['options'];
-
-        $d = DateTime::createFromFormat($options[0], $this->{$propertyName});
-        if ($d && $d->format($options[0]) != $this->{$propertyName}) 
-        {
-            $this->errors[$propertyName][] = 'Invalid date format';
+        $d = DateTime::createFromFormat(trim($options[1]), $this->{$propertyName});
+        if ($d && $d->format($options[1]) != $this->{$propertyName}) 
+            {
+                $this->errors[$propertyName][] = 'Invalid date format';
+            }
         }
     }
-}

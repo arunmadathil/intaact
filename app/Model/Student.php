@@ -12,7 +12,7 @@ class Student extends Model
     public $last_name = '';
     public $dob = '';
     public $contact_no = '';
-
+    public $primaryKey = 'id';
     public function tableName(): string
     {
         return 'students';

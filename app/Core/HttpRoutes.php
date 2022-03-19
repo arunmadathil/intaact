@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use Exception;
+
 class HttpRoutes
 {
     protected array $routes = [];
@@ -17,16 +19,52 @@ class HttpRoutes
     {
         $this->routes['get'][$path] = $closssure;
     }
-
+    //URL Post requests
     public  function post($path, $closssure)
     {
         $this->routes['post'][$path] = $closssure;
+        
     }
 
     public function delete()
     {
     }
 
+    //Available routing lists
+    public function getRouteMap($method): array
+    {
+        return $this->routes[$method] ?? [];
+    }
+
+    public function getCallback()
+    {
+        $method = $this->requests->getMethod();
+        $url = $this->requests->getUrl();
+        
+        $url = trim($url, '/');
+       
+        $routes = $this->getRouteMap($method);
+
+
+        foreach ($routes as $route => $callback) {
+            
+            $route = trim($route, '/');
+
+            if (!$route) {
+                continue;
+            }
+            // Convert route name into regex pattern
+            $routeRegex = "@^" . preg_replace_callback('/\{\w+(:([^}]+))?}/', fn($m) => isset($m[2]) ? "({$m[2]})" : '(\w+)', $route) . "$@";
+
+            if (preg_match_all($routeRegex, $url,$matches)) {
+                
+                $this->requests->setRouteParams($matches);
+                return $callback;
+            }
+        }
+
+        return false;
+    }
 
     public function resolve()
     {
@@ -35,10 +73,18 @@ class HttpRoutes
         $method = $this->requests->getMethod();
 
         $callback = $this->routes[$method][$path];
+      
+        if (!$callback) {
+
+            $callback = $this->getCallback();
+            if ($callback === false) {
+                return 'Page not found';
+            }
+        }
 
         if (is_null($callback)) {
 
-            return false;
+            return 'Page not found';
         }
 
         if (is_string($callback)) {
