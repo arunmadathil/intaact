@@ -3,11 +3,14 @@
 require_once "../vendor/autoload.php";
 
 use App\Controller\StudentController;
+
 use App\Core\AppServiceProvider;
 
 use App\Core\RouteServiceProvider;
 
  $router = new RouteServiceProvider(dirname(__DIR__));
+
+ $app = new AppServiceProvider();
  
  $router->httpRoutes->get('/','home');
  
@@ -20,3 +23,6 @@ use App\Core\RouteServiceProvider;
 
 
  $router->run();
+
+
+

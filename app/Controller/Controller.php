@@ -13,10 +13,20 @@
         
     }
 
-    public function view($view, $params = []){
+    public function view($view, $params = [])
+    {
 
         return RouteServiceProvider::$routeService->httpRoutes->renderView($view, $params);
         
+    }
+
+    public function redirectRoute(){
+
+    }
+
+    public function redirect($url)
+    {
+          header('Location:' . $url);
     }
 
  }

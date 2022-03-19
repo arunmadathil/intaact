@@ -46,12 +46,12 @@ class HttpRoutes
             return $this->renderView($callback);
         }
 
-        return call_user_func($callback);
+        return call_user_func($callback, $this->requests);
     }
 
     public function renderView($view, $params = [])
     {
-
+       
         $layout_content = $this->renderLayouts();
 
         $page_content = $this->renderPageContent($view, $params);
@@ -78,8 +78,13 @@ class HttpRoutes
             $$key = $value;
 
         }
+
         include_once(RouteServiceProvider::$ROOT_DIR . "/views/$view.php");
 
         return ob_get_clean();
+    }
+
+    public function with($params){
+        return $this;
     }
 }
