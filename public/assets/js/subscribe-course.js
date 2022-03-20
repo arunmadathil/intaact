@@ -10,3 +10,29 @@ $('.add').on('click', function(){
 $('body').on('click', '.remove', function(){        
    $(this).parent().parent().remove();
 });
+
+$('.attch-course').on('click',function(){
+   
+   error_flage = false;
+   $('.course').each(function(key,html){
+      
+      $(html).val();
+      if($(html).val() == undefined || $(html).val() == null || $(html).val() == ''){
+         error_flage = true;
+      }
+   })
+
+   $('.students').each(function(key,html){
+      
+      $(html).val();
+      if($(html).val() == undefined || $(html).val() == null || $(html).val() == ''){
+         error_flage = true;
+      }
+   })
+   if(!error_flage){
+      $(this).closest('form').submit();
+   }
+   else{
+      $('.error_msg').removeAttr('hidden');
+   }
+})

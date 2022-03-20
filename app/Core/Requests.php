@@ -185,11 +185,12 @@ class Requests
 
 
     protected function string($param)
-    {
+    {   
+        
 
         if ($this->{$param}) {
 
-            if (!preg_match("/^[a-zA-z]*$/", $this->{$param}))
+            if (!preg_match("/^[A-Za-z\\- \']+$/", $this->{$param}))
                 $this->errors[$param][] = "The $param value must be a string!";
         }
 

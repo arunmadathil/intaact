@@ -14,6 +14,7 @@ use App\Core\RouteServiceProvider;
  
  //Stdents
  $router->httpRoutes->get('/student',[new StudentController,'index']);
+ $router->httpRoutes->get('/',[new StudentController,'index']);
  
  $router->httpRoutes->get('/student/register',[new StudentController,'create']);
  

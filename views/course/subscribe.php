@@ -3,45 +3,49 @@
 <div class="row">
     <div class="col-md-12 ">
         <div class="text-center mb-4" style="margin-left: -150px;">
-            <h4>Subscribe  Course</h4>
+            <h4>Subscribe Course</h4>
         </div>
     </div>
 </div>
+<div class="alert alert-danger error_msg" hidden role="alert">
+  Before proceed, select all the neccessary fields already added!
+</div>
+<div class="row">
+    <form method="post" action="/subscribe-course/subscribe" class="form-card">
+        <div class="row subscribe">
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <label class="form-control-label px-3">Course<span class="text-danger"> *</span></label>
+                    <select name="course[]" class="form-control course">
+                        <option value="">Select Course</option>
+                        <?php foreach ($courses as $course) : ?>
+                            <option value="<?= $course['id'] ?>"><?= $course['course_name'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <label class="form-control-label px-3">Stude<span class="text-danger"> *</span></label>
+                    <select name="students[]" class="form-control students" id="">
+                        <option value="">Select Students</option>
+                        <?php foreach ($students as $student) : ?>
+                            <option value="<?= $student['id'] ?>"><?= ucfirst($student['first_name']) . " " . ucfirst($student['last_name'])  ?></option>
+                        <?php endforeach; ?>
 
-<form method="post" action="/subscribe-course/subscribe" class="form-card">
-    <div class="row subscribe">
-        <div class="col-sm-5">
-            <div class="form-group">
-                <label class="form-control-label px-3">Student<span class="text-danger"> *</span></label>
-                <select name="course[]" class="form-control">
-                    <option value="">Select Course</option>
-                    <?php foreach ($courses as $course) : ?>
-                        <option value="<?= $course['id'] ?>"><?= $course['course_name'] ?></option>
-                    <?php endforeach; ?>
-                </select>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-2 add_btn">
+                <a class="btn btn-primary add" style="margin: auto; height: 35px; margin-top: 33px;" href="javascript:;"><i class="fa fa-plus"></i></a>
             </div>
         </div>
-        <div class="col-sm-5">
-            <div class="form-group">
-                <label class="form-control-label px-3">Course<span class="text-danger"> *</span></label>
-                <select name="students[]" class="form-control" id="">
-                    <option value="">Select Students</option>
-                    <?php foreach ($students as $student) : ?>
-                        <option value="<?= $student['id'] ?>"><?= ucfirst($student['first_name']) . " " . ucfirst($student['last_name'])  ?></option>
-                    <?php endforeach; ?>
+        <div class="append"></div>
 
-                </select>
+        <div class="row justify-content-between text-left">
+            <div class="form-group col-sm-2" style="margin-left: 424px;">
+                <button class="btn btn-info attch-course" type='button' >Submit</button>
             </div>
         </div>
-        <div class="col-sm-2 add_btn">
-            <a class="btn btn-primary add" style="margin: auto; height: 35px; margin-top: 33px;" href="javascript:;"><i class="fa fa-plus"></i></a>
-        </div>
-    </div>
-    <div class="append"></div>
-
-    <div class="row justify-content-between text-left">
-        <div class="form-group col-sm-2" style="margin-left: 424px;">
-            <button class="btn btn-info">Submit</button>
-        </div>
-    </div>
-</form>
+    </form>
+</div>
