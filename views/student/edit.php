@@ -1,12 +1,15 @@
 <?php
-
+  $errors = $_SESSION['errors'];
+  $request = $_SESSION['request'];
+  unset($_SESSION['errors']);
+  unset($_SESSION['request']);
 ?>
 
-<form method="POST" action="/student/update/<?=$student->id?>">
-  <h3>Contact</h3>
+<form method="POST" action="/student/update/<?=$id?>">
+  <h3>Student Edit</h3>
   <div class="form-group">
     <label>First Name</label>
-    <input type="text" class="form-control" name="first_name" value = "<?= old($student->first_name);?>" placeholder="Enter first name.">
+    <input type="text" class="form-control" name="first_name" value = "<?= old($request->first_name ,$student->first_name);?>" placeholder="Enter first name.">
     <?php
     if (!empty($errors['first_name']))
       foreach ($errors['first_name'] as $message) {
@@ -28,7 +31,7 @@
 
   <div class="form-group mb-2">
     <label for="exampleInputPassword1">DOB </label>
-    <input type="date" class="form-control" name="dob" value = "<?=old($student->dob);?>" placeholder="Enter date of birth!">
+    <input type="input" class="form-control datepicker" name="dob" value = "<?=old($student->dob);?>" placeholder="Enter date of birth!">
     <?php
     if (!empty($errors['dob']))
       foreach ($errors['dob'] as $message) {
@@ -53,3 +56,7 @@
   <button type="submit" class="btn btn-primary">Submit</button>
 
 </form>
+
+
+
+

@@ -129,7 +129,8 @@ abstract class Model
             if ($statement->rowCount() === 1) {
 
                 return $statement->fetch(\PDO::FETCH_OBJ);
-            } else {
+            } 
+            else {
                 return $statement->fetchAll();
             }
         } 

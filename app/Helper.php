@@ -3,10 +3,10 @@
 
 function old($form_data, $db_data = null)
 {
-    if (isset($db_data)) {
-        return $db_data;
+    if (isset($form_data)) {
+        return $form_data;
     } 
     else {
-        return $form_data;
+        return $db_data;
     }
 }

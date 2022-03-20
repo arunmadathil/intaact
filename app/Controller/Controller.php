@@ -1,6 +1,7 @@
 <?php
- 
  namespace App\Controller;
+ 
+ session_start();
 
  use App\Core\RouteServiceProvider; 
  
@@ -24,9 +25,12 @@
 
     }
 
-    public function redirect($url)
+    public function redirect($url , $args = [])
     {
-          header('Location:' . $url);
+        foreach($args as $key => $arg){
+            $_SESSION[$key] = $arg;
+        }
+        header('Location:' . $url);
     }
 
  }

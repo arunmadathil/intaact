@@ -253,8 +253,9 @@ class Requests
     {
         $propertyName = $params['property'];
         $options = $params['options'];
-        $d = DateTime::createFromFormat(trim($options[1]), $this->{$propertyName});
-        if ($d && $d->format($options[1]) != $this->{$propertyName}) 
+        $d = DateTime::createFromFormat(trim($options[1]), trim($this->{$propertyName}));
+        
+        if ($d && trim($d->format($options[1])) != trim($this->{$propertyName})) 
             {
                 $this->errors[$propertyName][] = 'Invalid date format';
             }

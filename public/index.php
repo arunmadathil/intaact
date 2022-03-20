@@ -15,9 +15,10 @@ use App\Core\RouteServiceProvider;
 //  $router->httpRoutes->get('/','home');
  
 
- $router->httpRoutes->get('/student',[new StudentController,'create']);
+ $router->httpRoutes->get('/student',[new StudentController,'index']);
+ $router->httpRoutes->get('/student/create',[new StudentController,'create']);
 
- $router->httpRoutes->post('/student',[new StudentController,'store']);
+ $router->httpRoutes->post('/student/store',[new StudentController,'store']);
  $router->httpRoutes->get('/student/edit/{id}',[new StudentController,'edit']);
  $router->httpRoutes->post('/student/update/{id}',[new StudentController,'update']);
 

@@ -57,9 +57,10 @@ class HttpRoutes
             $routeRegex = "@^" . preg_replace_callback('/\{\w+(:([^}]+))?}/', fn($m) => isset($m[2]) ? "({$m[2]})" : '(\w+)', $route) . "$@";
 
             if (preg_match_all($routeRegex, $url,$matches)) {
-                
+
                 $this->requests->setRouteParams($matches);
                 return $callback;
+
             }
         }
 
@@ -97,10 +98,9 @@ class HttpRoutes
 
     public function renderView($view, $params = [])
     {
-       
         $layout_content = $this->renderLayouts();
 
-        $page_content = $this->renderPageContent($view, $params);
+        $page_content = $this->renderPageContent(trim($view), $params);
 
         return str_replace("{{content}}", $page_content, $layout_content);
     }
