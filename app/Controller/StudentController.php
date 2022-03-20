@@ -63,7 +63,7 @@ class StudentController extends Controller
 
         $student->create();
         
-        return $this->redirect('/student',['success' => 'Student registered succeffuly!']);
+        return $this->redirect('/student',['success' => 'Student registered successfully!']);
     }
 
     public function edit($request)
@@ -116,6 +116,6 @@ class StudentController extends Controller
         $id = $request->routeValue();
         $student = (new Student);
         $student->delete('DELETE FROM students WHERE id = ?', [$id]);
-        return $this->redirect('/student',['success' => 'Student deleted succeffuly!']);
+        return $this->redirect('/student',['success' => 'Student deleted successfully!']);
     }
 }

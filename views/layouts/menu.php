@@ -12,7 +12,7 @@
         <a class="nav-link" href="/subscribe-course">Subscribe Course</a>
       </li>
 	  <li class="nav-item active">
-        <a class="nav-link" href="/report">Report</a>
+        <a class="nav-link" href="/reports">Report</a>
       </li>
            
     </ul>    

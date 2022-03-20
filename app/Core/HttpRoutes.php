@@ -151,7 +151,6 @@ class HttpRoutes
             $$key = $value;
 
         }
-
         include_once(RouteServiceProvider::$ROOT_DIR . "/views/$view.php");
 
         return ob_get_clean();

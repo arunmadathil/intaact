@@ -52,7 +52,31 @@ abstract class Model
         } 
         catch (\PDOException $e) 
         {
-            echo 'Something went wrong';
+            echo 'Something went wrong' . $e->getMessage();
+        }
+    }
+
+    public function dbQuery($sql, $where = [])
+    {
+        try{
+
+            $limit = $this->getLimit($sql, $where);
+
+            $statement = $this->prepareQuery($sql.$limit);
+            
+            if(count($where) > 0){
+                
+                $statement->execute($where);
+            }
+            else{
+
+                $statement->execute();
+            }
+            
+            return $statement->fetchAll();
+
+        }catch(\PDOException $e){
+            echo 'Something went wrong in the query'.$e->getMessage();             
         }
     }
 

@@ -6,7 +6,8 @@
 
 <?php
     if($path = file_path()){
-        include_once("../public/assets/js/$path.js");
+        if(file_exists("../public/assets/js/$path.js"))
+            include_once("../public/assets/js/$path.js");
     }
 ?>
 

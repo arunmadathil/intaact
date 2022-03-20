@@ -93,14 +93,16 @@ class Requests
     //Get body of request data from HTTP header for POST method
     public function bodyPost()
     {
-
         $body = array();
 
         if ($this->getMethod() == 'post') {
 
             foreach ($_POST as $key => $value) {
 
-                $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS); //Sanitize special characters
+                if(!is_array( $value))
+                    $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS); //Sanitize special characters
+                else
+                    $body[$key] = $value;
 
             }
         }
