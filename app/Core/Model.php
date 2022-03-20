@@ -246,7 +246,6 @@ abstract class Model
 
     public function initPagination($limit = 0, $url, $page = 1)
     {
-        error_log($page);
         $this->limit = (int)$limit;
         $this->url = $url;
         $this->page = ((int)$page == 0) ? 1 : (int)$page;
