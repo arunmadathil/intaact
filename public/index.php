@@ -16,13 +16,13 @@ use App\Core\RouteServiceProvider;
  
 
  $router->httpRoutes->get('/student',[new StudentController,'index']);
- $router->httpRoutes->get('/student/create',[new StudentController,'create']);
+ $router->httpRoutes->get('/student/register',[new StudentController,'create']);
 
  $router->httpRoutes->post('/student/store',[new StudentController,'store']);
  $router->httpRoutes->get('/student/edit/{id}',[new StudentController,'edit']);
  $router->httpRoutes->post('/student/update/{id}',[new StudentController,'update']);
+ $router->httpRoutes->get('/student/delete/{id}',[new StudentController,'delete']);
 
-//  $router->httpRoutes->get('/contact/show',[new StudentController,'show']);
 
 
  $router->run();

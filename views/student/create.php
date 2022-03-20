@@ -2,8 +2,8 @@
 
 ?>
 
-<form method="POST" action="/contact">
-  <h3>Contact</h3>
+<form method="POST" action="/student/store">
+  <h4>Register</h4>
   <div class="form-group">
     <label>First Name</label>
     <input type="text" class="form-control" name="first_name" value = "<?= old($request->first_name);?>" placeholder="Enter first name.">
@@ -28,7 +28,7 @@
 
   <div class="form-group mb-2">
     <label for="exampleInputPassword1">DOB </label>
-    <input type="date" class="form-control" name="dob" value = "<?=old($request->dob);?>" placeholder="Enter date of birth!">
+    <input type="text" class="form-control datepicker" name="dob" value = "<?=old($request->dob);?>" placeholder="Enter date of birth!">
     <?php
     if (!empty($errors['dob']))
       foreach ($errors['dob'] as $message) {

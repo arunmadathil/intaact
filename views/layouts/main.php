@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="en">
-  <?php require_once('header.php') ?> 
+    {{header}}
   <body>
     <div class="container">
     <?php require_once('menu.php') ?> 
       {{content}}
       
     </div>
-    <?php require_once('footer.php') ?> 
+      {{footer}}
   </body>
 </html>

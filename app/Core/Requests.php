@@ -22,25 +22,11 @@ class Requests
         $this->getVariables();
     }
 
-    //Resolve and get Query string data from http request
-    private function parseUrl($queryString = '')
-    {
-        $parse = parse_url($queryString);
-
-        foreach (explode('&', $parse['query']) as $couple) {
-
-            list($key, $val) = explode('=', $couple);
-
-            $_GET[$key] = $val;
-        }
-    }
-
 
     //get path from URI
     public function getPath()
     {
         $path = $this->server['REQUEST_URI'] ?? '/';
-
         $position = strpos($path, '?');
 
         if ($position) {
@@ -83,6 +69,7 @@ class Requests
         }
 
         $this->requestBody = $body;
+
     }
 
     //Set route with specific value

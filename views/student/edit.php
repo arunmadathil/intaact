@@ -6,7 +6,7 @@
 ?>
 
 <form method="POST" action="/student/update/<?=$id?>">
-  <h3>Student Edit</h3>
+  <h4>Edit</h4>
   <div class="form-group">
     <label>First Name</label>
     <input type="text" class="form-control" name="first_name" value = "<?= old($request->first_name ,$student->first_name);?>" placeholder="Enter first name.">

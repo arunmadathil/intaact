@@ -164,6 +164,10 @@ abstract class Model
     {
         $this->pagination = AppServiceProvider::$app->pagination->getPagination($total_records, $this->limit, $this->url, $this->page);
     }
+    
+    public function getPagination(){
+        return $this->pagination;
+    }
 
     protected function prepareQuery($sql)
     {
@@ -218,6 +222,7 @@ abstract class Model
 
     public function initPagination($limit = 0, $url, $page = 1)
     {
+        error_log($page);
         $this->limit = (int)$limit;
         $this->url = $url;
         $this->page = ((int)$page == 0) ? 1 : (int)$page;

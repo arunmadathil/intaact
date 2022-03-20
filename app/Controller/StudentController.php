@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Core\Requests;
-use App\Core\RouteServiceProvider;
 use App\Model\Student;
 
 class StudentController extends Controller
@@ -14,11 +13,17 @@ class StudentController extends Controller
 
     }
 
-    public function index()
+    public function index(Requests $request)
     {
-        $students = (new Student)->all(['id','first_name','last_name']);
-        
-        return $this->view('student/index',compact('students'));
+        $obj = (new Student);
+
+        $obj->initPagination(5, '/student', $request->page ?? 1);
+
+        $students =  $obj->all(['id','first_name','last_name']);
+
+        $pagination = $obj->getPagination();
+
+        return $this->view('student/index',compact('students','pagination'));
     }
 
     public function create(){
@@ -34,7 +39,7 @@ class StudentController extends Controller
 
             'last_name' => 'required | string | max: 20',
 
-            'contact_no' => 'required | integer | min:2 | max: 10',
+            'contact_no' => 'required  | min:2 | max: 10',
 
             'dob' => 'required | date_format:Y-m-d ',
 
@@ -57,7 +62,8 @@ class StudentController extends Controller
         $student->contact_no = $request->contact_no;
 
         $student->create();
-       
+        
+        return $this->redirect('/student',['success' => 'Student registered succeffuly!']);
     }
 
     public function edit($request)
@@ -105,7 +111,11 @@ class StudentController extends Controller
 
     }
 
-    public function delete(){
-        
+    public function delete(Requests $request){
+
+        $id = $request->routeValue();
+        $student = (new Student);
+        $student->delete('DELETE FROM students WHERE id = ?', [$id]);
+        return $this->redirect('/student',['success' => 'Student deleted succeffuly!']);
     }
 }

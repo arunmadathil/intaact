@@ -98,14 +98,24 @@ class HttpRoutes
 
     public function renderView($view, $params = [])
     {
-        $layout_content = $this->renderLayouts();
+       
+        $layout_main = $this->renderMain();
 
         $page_content = $this->renderPageContent(trim($view), $params);
 
-        return str_replace("{{content}}", $page_content, $layout_content);
+        $header = $this->renderHeader(trim($view));
+
+        $footer = $this->renderFooter(trim($view));
+
+
+        return str_replace("{{header}}",  $header, 
+                str_replace("{{content}}", $page_content, 
+                    str_replace("{{footer}}", $footer, $layout_main)));
+
+        
     }
 
-    protected function renderLayouts()
+    protected function renderMain($view = null)
     {
         ob_start();
 
@@ -115,6 +125,23 @@ class HttpRoutes
     }
 
 
+    protected function renderHeader($view = null)
+    {
+        ob_start();
+        include_once(RouteServiceProvider::$ROOT_DIR . "/views/layouts/header.php");
+
+        return ob_get_clean();
+    }
+
+    protected function renderFooter($view = null)
+    {
+        ob_start();
+
+        include_once(RouteServiceProvider::$ROOT_DIR . "/views/layouts/footer.php");
+
+        return ob_get_clean();
+    }
+    
     protected function renderPageContent($view, $params = [])
     {
         ob_start();
