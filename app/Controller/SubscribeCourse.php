@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Core\Requests;
 use App\Model\Course;
+use App\Model\Report;
 use App\Model\Student;
 
 class SubscribeCourse extends Controller
@@ -37,9 +38,9 @@ class SubscribeCourse extends Controller
 
     public function reports(Requests $request){
         
-        $course = new Course;    
-
-        $course->initPagination(5, '/report',  $request->page ?? 1);  
+        $report = new Report;    
+      
+        $report->initPagination(5, '/reports',  $request->page ?? 1);  
           
         $sql = "SELECT CONCAT(s.first_name,' ', s.last_name) full_name,c.course_name 
                 FROM course_subscribe cs 
@@ -47,9 +48,9 @@ class SubscribeCourse extends Controller
                 LEFT JOIN courses c ON cs.course_id=c.id 
                 ORDER BY s.first_name";        
         
-        $reports = $course->dbQuery($sql);
+        $reports = $report->dbQuery($sql);
 
-        $pagination = $course->getPagination();  
+        $pagination = $report->getPagination();  
        
 
         return $this->view('course/reports', compact('reports', 'pagination'));
