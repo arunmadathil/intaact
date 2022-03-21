@@ -12,7 +12,7 @@ class AppServiceProvider
       public $db;
       public static AppServiceProvider $app;
 
-      // public Pagination $pagination;
+      public Pagination $pagination;
 
       public function __construct($config = [])
       {
