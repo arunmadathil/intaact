@@ -4,6 +4,7 @@
 </br>
 <div class="row">
 <form method="POST" action="/course/store">
+    <?=csrf_token()?>
   <h4>Create Course</h4>
   <div class="form-group">
     <label>Course Name</label>

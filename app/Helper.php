@@ -24,3 +24,9 @@ function file_path()
 
     return $path;
 }
+
+function csrf_token(){
+    $csrf = \App\Core\CsrfTokenVerification::getInstance();
+    $token = $csrf::getToken();
+    return "<input type='hidden' name='_csrf_token' value ='$token'>";
+}

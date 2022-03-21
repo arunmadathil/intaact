@@ -4,8 +4,11 @@
 <br>
 <div class="row">
   <form method="POST" action="/student/store">
+      <?=csrf_token()?>
     <h4>Register</h4>
-    <div class="form-group">
+      <br>
+
+      <div class="form-group">
       <label>First Name</label>
       <input type="text" class="form-control" name="first_name" value="<?= old($request->first_name); ?>" placeholder="Enter first name.">
       <?php
@@ -15,6 +18,7 @@
         }
       ?>
     </div>
+      <br>
 
     <div class="form-group mt-2">
       <label for="exampleInputPassword1">Last Names</label>
@@ -26,6 +30,7 @@
         }
       ?>
     </div>
+      <br>
 
     <div class="form-group mb-2">
       <label for="exampleInputPassword1">DOB </label>
